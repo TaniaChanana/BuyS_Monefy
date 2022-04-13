@@ -214,8 +214,9 @@ const BankLoan = () => {
     }
     let amountNow = location.state.amount;
     let suppName = location.state.sname;
+    let buyerItemPurchaseId = location.state.buyerItemPurchaseId;
     console.log("amount", amountNow, " ", "supplier" , suppName);
-    navigate('/payment', {state: {amount : amountNow, modeOfPayment : 2, sname : suppName}})
+    navigate('/payment', {state: {amount : amountNow, modeOfPayment : 2, sname : suppName, buyerItemPurchaseId : buyerItemPurchaseId}})
  
   };
   return (

@@ -314,7 +314,7 @@ console.log(mode);
       if(mode === '1'){
         navigate('/payment',{state:{amount:amount, sname:supplierName, modeOfPayment : 1 , buyerItemPurchaseId : buyerItemPurchaseId}});
       }else if(mode === '2'){
-        navigate('/bankLoan',{state: {amount : amount, modeOfPayment : 2, sname : supplierName}})
+        navigate('/bankLoan',{state: {amount : amount, modeOfPayment : 2, sname : supplierName , buyerItemPurchaseId : buyerItemPurchaseId}})
       }
     }).catch((err) => { console.log('Axios Error:', err); })
   };
