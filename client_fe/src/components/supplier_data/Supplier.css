@@ -1,0 +1,44 @@
+/* .form-control{
+    width: 65%;
+}
+.heading{
+    position: relative;
+    top:0;
+    left:0;
+    color: rgb(66, 136, 228);
+   
+}
+.container{
+    position: absolute;
+    top:10%;
+    left: 0;
+    right:0;
+    background-color: white;
+    width: 60%;
+    box-shadow: 5px 5px 20px rgb(34, 36, 33);
+} */
+.item_input{
+    flex: 0.9 !important;
+}
+.form-floating>.form-control:not(:placeholder-shown) {
+    padding-top: 1.3rem !important;
+}
+.btn{
+    width: 160px !important;
+}
+.form-floating>label{
+    padding: 0.6rem 0.75rem !important;
+  }
+
+/* 
+@media screen and (max-width: 992px) {
+    .container{
+        width: 75%;
+    }
+}
+@media screen and (max-width: 1000px) {
+    #iname{
+        width: 40%;
+        margin-right: 8px;
+    }
+} */

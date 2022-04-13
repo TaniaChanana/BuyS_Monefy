@@ -1,0 +1,61 @@
+.u-container *{
+    all: unset;
+}
+.u-container{
+    margin: 30px;
+    width: calc(100vw-250px);
+    margin-left: 250px;
+}
+.wlcm-container{
+    display: flex;
+    flex-direction: column;
+}
+.wlcm-container h1,
+.wlcm-container h3{
+    font-size: 44px;
+    color: rgb(221, 50, 221);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.wlcm-container h3{
+    font-size: 40px;
+    font-style: italic;
+    color: rgb(221, 50, 221);
+}
+.user-details{
+    padding: 50px 0;
+    justify-self: center;
+    align-self: center;
+}
+.u-label, .u-value{
+    all: unset;
+    font-size: 32px;
+}
+.u-label{
+    font-weight: 600;
+    font-style: oblique;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.u-value{
+    color: #333;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 30px;
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    font-style: italic;
+}
+.video-setting{
+    width: 800px !important;
+    height: 500px !important;
+}
+.headings{
+    margin-left: 100px;
+}
+.first-heading{
+    font-size: 100px;
+    color: #0d6efd;
+}
+.second-heading{
+    font-size: 90px;
+    color: grey;
+}

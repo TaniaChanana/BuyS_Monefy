@@ -1,0 +1,15 @@
+.video-setting{
+    width: 1000px !important;
+    height: 700px !important;
+}
+.headings{
+    margin-left: 100px;
+}
+.first-heading{
+    font-size: 100px;
+    color: #0d6efd;
+}
+.second-heading{
+    font-size: 90px;
+    color: grey;
+}

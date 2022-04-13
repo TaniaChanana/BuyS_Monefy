@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.container{
+    position: absolute;
+    top:10%;
+    left: 0;
+    right:0;
+    background-color: white;
+    box-shadow: 5px 5px 20px rgb(34, 36, 33);
+}
+.heading{
+    position: relative;
+    top:0;
+    left:0;
+    color: rgb(66, 136, 228);
+   
+}
+.inputBox div{
+    height: 50px;
+}
+.inputBox select{
+    height: 57px;
+    width: 526px;
+}

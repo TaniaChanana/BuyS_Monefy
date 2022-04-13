@@ -1,0 +1,12 @@
+.title{
+    font-size: 40px;
+    font-weight: 800;
+}
+*{
+    padding: 10px;
+}
+
+.btn{
+    font-weight: 800;
+    font-size: 19px;
+}

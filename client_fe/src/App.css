@@ -1,0 +1,23 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+select {
+  width: 530px !important;
+  height: 50px;
+}
+
+input:not(.form-check-input) {
+  height: 50px !important;
+}
+
+.form-check-input {
+  height: 1em !important;
+}
+
+form {
+  box-shadow: 3px 3px 8px #9d9ba3;
+  padding: 10px 0;
+}

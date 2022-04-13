@@ -1,0 +1,34 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.container{
+    position: absolute;
+    top:5%;
+    left: 0;
+    right:0;
+    background-color: white;
+    box-shadow: 5px 5px 20px rgb(34, 36, 33);
+}
+.heading{
+    position: relative;
+    top:0;
+    left:0;
+    color: rgb(66, 136, 228);   
+}
+
+.inputBox div{
+    height: unset !important;
+}
+select{
+    height: 50px !important;
+    width: 455px !important;
+}
+label{
+    padding-top: 0.5rem;
+}
+
+/* .form-check-input{
+    height: 1em !important; */
+/* } */

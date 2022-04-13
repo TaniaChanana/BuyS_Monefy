@@ -1,0 +1,118 @@
+/* .sidebar{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    padding: 58px 0 0 ;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+    width: 240px;
+    z-index: 600;
+}
+
+@media screen and (max-width: 991.98px) {
+    .sidebar{
+        width: 100%;
+    }
+}
+
+.sidebar .active{
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+.sidebar-sticky{
+    position: relative;
+    top: 0;
+    height: calc(100vh-48px);
+    padding-top: 0.5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+} */
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(180 226 233);
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 20px;
+  }
+  
+  .sidenav a {
+    padding: 8px 0 8px 0;
+    text-decoration: none;
+    font-size: 22px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #111;
+    font-style: italic;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .sidenav a:hover {
+    color: #837f7f;
+  }
+  
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+    display: none;
+    background: transparent;
+    border: 0;
+  }
+  
+  #main {
+    transition: margin-left .5s;
+    padding: 16px;
+  }
+
+  .span-btn{
+    font-size:30px;
+    cursor:pointer;
+    display: none;
+  }
+  .heading-nav{
+    all: unset;
+    font-size: 28px;
+    font-family: cursive;
+    margin: 0 0 20px 0;
+    display: inline-block;
+    color: #000;
+  }
+  .sidenav .active{
+    color: #fff;
+  }
+  
+  @media screen and (max-width: 576px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+    .sidenav a {
+        font-size: 18px;
+        padding-left: 0;
+    }
+    .sidenav .closebtn{
+        display: block;
+    }
+    .navbar-m{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 10px;
+        background-color: rgb(68, 189, 207);
+        color: #fff;
+    }
+    .span-btn{
+        display: inline-block;
+    }
+    .heading-nav{
+      font-size: 24px;
+      margin: 30px 0 20px 0;
+    }
+  }
