@@ -15,6 +15,7 @@ input:not(.form-check-input) {
 
 .form-check-input {
   height: 1em !important;
+  width: 1em !important;
 }
 
 form {

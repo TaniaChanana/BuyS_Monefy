@@ -45,6 +45,10 @@ function Header() {
       <i class="fe fe-x"></i>
     </button>
 
+    {(usertype==='2' || usertype === '3' || usertype === '4' || usertype === '1') ? (<>
+   <h4 className={`${styles["user-heading"]}`}>Welcome {window.sessionStorage.getItem(sessionConst.userName)}</h4></> ) : (<></>) 
+    }
+
     <ul class="navbar-nav ms-auto">
       <li class="nav-item">
         {usertype==='2'?<Link to="/Buyer" class={`nav-link ${styles["nav-link"]} ${splitLocation[1] === "Buyer" ? styles["active"] : ""}`} id="navbarLandings" >
@@ -55,7 +59,7 @@ function Header() {
           Home
         </Link>):(usertype==='1'?(<Link to="/Admin" class={`nav-link ${styles["nav-link"]} ${splitLocation[1] === "Admin" ? styles["active"] : ""}`} id="navbarLandings" >
           Home
-        </Link>):(<Lik to="home" class={`nav-link ${styles["nav-link"]} ${splitLocation[1] === "" ? styles["active"] : ""}`} id="navbarLandings" >
+        </Link>):(<Lik to="/" class={`nav-link ${styles["nav-link"]} ${splitLocation[1] === "" ? styles["active"] : ""}`} id="navbarLandings" >
           Home
         </Lik>))))}
       </li>
@@ -132,10 +136,11 @@ function Header() {
         
       </li>
 
+      
 
     </ul>
 
-   {/* {(usertype==='2' || usertype === '3' || usertype === '4' || usertype === '1') ? (<div className={styles['header-butns']}>
+   {(usertype==='2' || usertype === '3' || usertype === '4' || usertype === '1') ? (<div className={styles['header-butns']}>
     <button class="navbar-btn btn btn-sm btn-primary lift ms-auto mx-2" onClick={logoutHandle} >
       Logout
     </button>
@@ -147,9 +152,9 @@ function Header() {
       Sign Up
     </Link>
     </div>) 
-    } */}
+    }
 
-    {(usertype==='2' || usertype === '3' || usertype === '4' || usertype === '1') ? (<>
+    {/* {(usertype==='2' || usertype === '3' || usertype === '4' || usertype === '1') ? (<>
    <h3 className='ms-auto text-black-50'>{window.sessionStorage.getItem(sessionConst.userName)}</h3><div className={styles['header-butns']}>
     <button class="navbar-btn btn btn-sm btn-primary lift ms-auto mr-2" onClick={logoutHandle} >
       Logout
@@ -162,7 +167,7 @@ function Header() {
       Sign Up
     </Link>
     </div>) 
-    }
+    } */}
 
   </div>
 
