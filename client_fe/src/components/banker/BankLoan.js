@@ -290,11 +290,25 @@ const BankLoan = () => {
                 </div>
               </div>
 
-              <div className="row align-items-center inputBox mt-1">
+              {/* <div className="row align-items-center inputBox mt-1">
                 <div className="col mt-1 form-floating">
                   <input type="file" className="form-control" id="bankLoanOnlineApplication" name="bankLoanOnlineApplication" onChange = {handleInputBankLoanPDF} placeholder="" required />
                   <label className="mx-3" htmlFor="bankLoanOnlineApplication">Upload Bank Loan PDF</label>
                 </div>
+              </div> */}
+
+              <div className="row align-items-center inputBox mt-1">
+                <div className="col mt-1 form-floating  d-flex align-items-center justify-content-between">
+                  <input type="file" className="form-control" id="bankLoanOnlineApplication" name="bankLoanOnlineApplication" onChange = {handleInputBankLoanPDF} placeholder="" required />
+                  <label className="mx-3" htmlFor="bankLoanOnlineApplication">Upload Bank Loan PDF</label>
+                </div>
+                <a className='btn btn-primary btn-md'
+                                href='https://drive.google.com/file/d/1Gz3jV3EvDEZNxHquhC7w41MsqBir15VR/view?usp=sharing'
+                                smooth={true}
+                                spy='true'
+                                target="_blank"
+                                duration={2000}
+                            >Loan Document</a>
               </div>
 
               <div className="row align-items-center inputBox mt-1">

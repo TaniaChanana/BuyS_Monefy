@@ -220,3 +220,8 @@
   color: #fff !important;
   background-color: blue;
 }
+.user-heading{
+  color: rgb(220, 140, 70);
+  margin-bottom: 0 !important;
+  margin-left: 5px;
+}

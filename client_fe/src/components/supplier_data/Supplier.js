@@ -540,7 +540,7 @@ function Supplier({user}) {
                 </div>
               </div>
              
-             <div style={{display : "flex"}}>
+             <div className='d-flex align-items-center justify-content-evenly'>
               <div className="row justify-content-start my-3">
                 <div className="col d-flex justify-content-center">
                   <button className="btn btn-primary btn-lg mt-1" onClick={submitDetails}>Submit</button>
