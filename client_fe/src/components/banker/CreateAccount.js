@@ -79,8 +79,13 @@ function CreateAccount() {
       console.log(e);
       name = e.target.name;
       value = e.target.value;
-  
       setUser({...user, [name] : value});
+      // if(name === "accnum" && value.length == 12 && /^\d+$/.test(value)){
+      //   
+      // }else{
+      //   alert("Please enter a valid account number")
+      // }
+      
     }
    
     const handleSelectedBank = (e) => {
@@ -92,7 +97,19 @@ function CreateAccount() {
 
   const  submitDetails = (e) => {
     e.preventDefault();
-    console.log(selectedBankName, " ",selectedBankBranchCode)
+    // console.log(selectedBankName, " ",selectedBankBranchCode)
+    // console.log("length ", user.accnum.length);
+    console.log("is digit : ", /^\d+$/.test(user.accnum))
+
+    if(selectedBankName === "" || selectedBankBranchCode === "" || user.amount === "0" || user.accnum === ""){
+      alert("Please fill all the fields")
+    }
+    else if(user.accnum.length !== 12 && !(/^\d+$/.test(user.accnum))){
+      alert("Please enter a valid account number")
+      }
+      
+      else{
+        
     axios.post("http://localhost:3001/api/addUserAccount", 
     {
       userId: window.sessionStorage.getItem(sessionConst.userId),
@@ -101,31 +118,16 @@ function CreateAccount() {
       amount: user.amount,
       accountNumber: user.accnum,  
       },).then((res) => {
-
-    console.log("post body");
-   navigate('/UserProfile');
+        console.log(res);
+        alert(res.data.message);
+    setSelectedBankName('');
+    setSelectedBankBrnachCode('');
+    setUser({...user, amount: '', accnum: ''})
    
   }).catch((err) => { 
       console.log('Axios Error:', err);
  });
-//  axios.get("http://localhost:3001/api/createAccount", 
-//       {customername : user.customername,
-//         accnum:user.accnum,
-//         bankname:user.bankname,
-//         ifsc : user.ifsc,},).then((res) => {
-//         //  window.sessionStorage.setItem("bankaccounts",res.data[0]);
-//          console.log("FRESH:  ",res.data);
- 
-//     window.sessionStorage.setItem("acc",JSON.stringify(res.data));
-    
-   
-//           navigate("/");
-         
-//         }).catch((err) => { 
-//             console.log('Axios Error:', err);
-//        });
-
-     
+}
   
     };
 
@@ -151,7 +153,7 @@ function CreateAccount() {
               <div className="row align-items-center inputBox mt-4">
                 <div className="col form-floating mt-1">
                 <select id="fbname" className="form-control" value={selectedBankName} onChange={handleSelectedBank} required>
-                    <option value='' selected>Select Bank Name</option>
+                    <option value='0' selected>Select Bank Name</option>
                     {bankList && bankList.map((val, index) => (
                       <option key={index} value={val.bankName}>{val.bankName}</option>
                     ))}
@@ -161,7 +163,7 @@ function CreateAccount() {
               <div className="row align-items-center inputBox mt-4">
                 <div className="col mt-1 form-floating">
                 <select id="fbcode" className="form-control" value={selectedBankBranchCode} onChange={handleSelectedBranchCode} required>
-                    <option value='' selected>Select Branch Code</option>
+                    <option value='0' selected>Select Branch Code</option>
                     {bankBranchCodeList && bankBranchCodeList.map((val, index) => (
                       <option key={index} value={val.branchCode}>{val.branchCode}</option>
                     ))}

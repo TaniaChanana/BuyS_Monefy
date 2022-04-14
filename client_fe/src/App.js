@@ -25,6 +25,8 @@ import SupplierViewTransactions from './components/supplier_data/SupplierViewTra
 import ViewAllTransactions from './components/admin/ViewAllTransactions';
 import ViewBankDetailsSupplier from './components/supplier_data/ViewBankDetailsSupplier';
 import ViewBankDetailsBuyer from './components/buyer/ViewBankDetailsBuyer';
+import ViewLoanDetails from './components/buyer/ViewLoanDetails';
+import ViewItemList from './components/supplier_data/ViewItemList';
 
 function App() {
 
@@ -60,6 +62,8 @@ function App() {
           <Route exact path="/viewAllTransactions" element={<ViewAllTransactions />} />
           <Route exact path="/ViewBankDetailsSupplier" element={<ViewBankDetailsSupplier />} />
           <Route exact path="/ViewBankDetailsBuyer" element={<ViewBankDetailsBuyer />} />
+          <Route exact path="/ViewLoanDetails" element={<ViewLoanDetails />} />
+          <Route exact path="/ViewItemList" element={<ViewItemList />} />
           
         </Routes>
 

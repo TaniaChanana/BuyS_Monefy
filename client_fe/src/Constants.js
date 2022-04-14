@@ -51,4 +51,15 @@ export const sessionConst = {
     
 };
 
+export const statusConst = [
+    {
+        status : "Approved",
+        statusId : 1,
+    },
+    {
+        status : "Pending",
+        statusId : 2,
+    }
+]
+
 export default options;

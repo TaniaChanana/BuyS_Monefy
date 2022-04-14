@@ -76,6 +76,34 @@ class BUYSMONEFY {
             })
         })
 
+        this.app.get('/api/getItemList', (req, res) => {
+            const userId = req.query.supplierId;
+            const itemListSql = "select c.categoryName, i1.itemName, i.brandName, s.pricePerItem, s.availableItems from item_category_details c, item_details i, supplier_item_details s, item_tbl i1 where s.itemDetailsId = i.itemDetailsId and i.categoryId = c.categoryId and i.itemId = i1.itemId and s.userId = ?";
+            this.db.query(itemListSql, [userId], (err, result) => {
+                if (err) {
+                    console.log(err);
+                    res.sendStatus(500);
+                } else {
+                    console.log(result);
+                    res.send(result);
+                }
+            })
+        })
+
+        this.app.get('/api/getLoanDetails', (req, res) => {
+            const userId = req.query.buyerId;
+            const loanListSql = "select b.bankName, b.branchCode, u.accountNumber, l.loanAmount, concat(b.rateOfInterest,\"%\") as Interest, l.totalAmountToBePaid, l.emiMonths, l.status from bank_details b, user_account_details u, loan_details l where u.bankId = b.bankId and u.userAccountDetailsId = l.userAccountDetailsId and u.userId = ?";
+            this.db.query(loanListSql, [userId], (err, result) => {
+                if (err) {
+                    console.log(err);
+                    res.sendStatus(500);
+                } else {
+                    console.log(result);
+                    res.send(result);
+                }
+            })
+        })
+
         this.app.get('/api/getAllTransactions', (req, res) => {
             const paymentSql = "select u.userName as buyerName, u1.userName as supplierName, p.modeOfPayment, p.timeOfPayment, p.paidAmount from payment_details p, user_details u , user_details u1 ,  user_account_details a, user_account_details a1 where p.fromUserAccountDetailsId = a.userAccountDetailsId and p.toUserAccountDetailsId = a1.userAccountDetailsId and a.userId = u.userId and a1.userId = u1.userId order by p.timeOfPayment desc";
 
@@ -658,10 +686,12 @@ class BUYSMONEFY {
                     this.db.query(userAccountSql, [userId, fetchBankId, amount, accountNumber], (err, result) => {
                         if (err) {
                             console.log(err);
-                            res.sendStatus(500);
+                            if(err.code === "ER_DUP_ENTRY"){
+                                res.status(200).send({ success: true, message: 'Duplicate Entry for this account, please enter correct account number' });
+                            }
                         }
                         else {
-                            res.sendStatus(200);
+                            res.status(200).send({success : true , message : "Account Added Successfully"})
                         }
                     })
                 }
@@ -751,7 +781,7 @@ class BUYSMONEFY {
             const interestAmount = req.body.interestAmount;
             const mediaIdCollateral = req.body.mediaIdCollateral;
             const mediaIdLoanPDF = req.body.mediaIdLoanPDF;
-            const totalAmountToBePaid = loanAmount + interestAmount;
+            const totalAmountToBePaid = Number(loanAmount) + Number(interestAmount);
             const loanDateTime = new Date();
             const status = 1;
             const fetchUserAccountDetailsIdSql = "select userAccountDetailsId from user_account_details where accountNumber = ?";
