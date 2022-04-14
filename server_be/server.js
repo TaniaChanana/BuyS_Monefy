@@ -536,6 +536,11 @@ class BUYSMONEFY {
                 else {
                     console.log('fetched id');
                     console.log(result);
+                    if(result.length === 0){
+                        console.log("in if")
+                        res.status(200).send({ success: false, message: 'You are not registered with us, please signup first' });
+                    }else{
+                        console.log("in else")
                     const loggedUserId = result[0].userId;
                     console.log(loggedUserId);
                     let loginSql = `SELECT * FROM login_details log where log.userId in (?) and log.password = aes_encrypt(?,"Buys_Monefy")`;
@@ -548,11 +553,10 @@ class BUYSMONEFY {
                             res.status(200).send({ success: false, message: 'You are not registered with us, please signup first' });
                         }
                         else {
-                            console.log(result);
-                            res.sendStatus(200)
+                            res.status(200).send({ success: true, message: 'You are logged in, Welcome to BuyS Monefy' });
                         }
                     })
-
+                }
                 }
             })
         });
