@@ -25,7 +25,7 @@ function Supplier({user}) {
   const [item, setItem] = useState({
     itemid : 0,
     sname : "",
-    availableItems : 1,
+    availableItems : 0,
     itemPrice : 0,
     brand : "",
   });
@@ -157,10 +157,14 @@ function Supplier({user}) {
     e.preventDefault();
     let list = async () => {
       try{
-        await axios.post("http://localhost:3001/api/addItem", {
+        const res = await axios.post("http://localhost:3001/api/addItem", {
           categoryId: selectedCategory?.categoryId,
-          itemName: itemName
+          itemName: itemName.toUpperCase()
         })
+
+        alert(res.data.message)
+        
+        if(!res.data.message.includes("Duplicate"))
         setSelectedItemName(itemName);
       }catch(err){
         console.log(err);
@@ -176,10 +180,14 @@ function Supplier({user}) {
       console.log('category');
       console.log(categoryName);
       try{
-        await axios.post('http://localhost:3001/api/addCategory', {
-          categoryName: categoryName
+        const res = await axios.post('http://localhost:3001/api/addCategory', {
+          categoryName: categoryName.toUpperCase()
         })
+        alert(res.data.message)
+        
+        if(!res.data.message.includes("Duplicate"))
         setSelectedCategoryName(categoryName);
+
       }catch(err){
         console.log(err)
       }
@@ -192,11 +200,15 @@ function Supplier({user}) {
     e.preventDefault();
     let list = async () => {
       try{
-        await axios.post('http://localhost:3001/api/addBrand', {
+       const res =  await axios.post('http://localhost:3001/api/addBrand', {
           categoryId: selectedCategory?.categoryId,
           itemId: selectedItem.itemId,
-          brandName: brandName
+          brandName: brandName.toUpperCase()
         })
+
+        alert(res.data.message)
+        
+        if(!res.data.message.includes("Duplicate"))
         setSelectedBrand(brandName);
       }catch(err){
         console.log(err)
@@ -234,20 +246,32 @@ function Supplier({user}) {
     value = e.target.value;
 
     setItem({...item, [name] : value});
+    // if(e.target.value === ""){
+    //   alert("Enter all fields");
+    // }
   }
 
   const handleSelectedItem = (e) => {
     setSelectedItemName(e.target.value);
     console.log(e.target.value);
+    // if(e.target.value === "0"){
+    //   alert("Enter all fields");
+    // }
     // getId();
   }
   const handleSelectedCategory = (e) => {
     setSelectedCategoryName(e.target.value);
+    // if(e.target.value === "0"){
+    //   alert("Enter all fields");
+    // }
     // console.log(e.target.value);
     // getId();
   }
   const handleSelectedBrand = (e) => {
     setSelectedBrand(e.target.value);
+    // if(e.target.value === "0"){
+    //   alert("Enter all fields");
+    // }
   }
 
   const handleInputNewItem = (e) => {
@@ -255,6 +279,7 @@ function Supplier({user}) {
     value = e.target.value;
     setItemName(value);
     console.log(itemName)
+    
   }
 
   const handleInputNewCategory = (e) => {
@@ -262,6 +287,7 @@ function Supplier({user}) {
     value = e.target.value;
     setCategoryName(value);
     console.log(categoryName);
+    
   }
 
   const handleInputNewBrand = (e) => {
@@ -269,12 +295,17 @@ function Supplier({user}) {
     value = e.target.value;
     setBrandName(value);
     console.log(brandName);
+    
   }
 
   const submitDetails = async(e) => {
     e.preventDefault();
+    if(selectedCategoryName === "0" || selectedItemName === "0" || selectedBrand === "0" || Number(item.itemPrice) == 0 || item.availableItems === "0" ){
+      alert("Please fill all the fields")
+    }
+    else{
     try {
-      await axios.post("http://localhost:3001/api/addSupplierItem", {
+      const res = await axios.post("http://localhost:3001/api/addSupplierItem", {
         categoryId: selectedCategory.categoryId,
         itemId: selectedItem.itemId,
         brandName: selectedBrand,
@@ -283,15 +314,50 @@ function Supplier({user}) {
         availableItems: item.availableItems,
       });
       // navigate('/UserProfile')
-      alert("Item Added Successfully");
+      alert(res.data.message);
+
+      if(res.data.message.includes("Successfully")){
       setSelectedCategoryName('');
       setSelectedItemName('');
       setSelectedBrand('');
       setItem({...item,itemPrice : '', availableItems:''});
+      }
       // setUser({...user, bankname:'', ifsc:'',city:'',state:'', address:'',pinCode:'',branchcode:'',interest:''})
     } catch (err) {
       console.log(err);
     }
+  }
+  };
+
+  const updateDetails = async(e) => {
+    e.preventDefault();
+    if(selectedCategoryName === "0" || selectedItemName === "0" || selectedBrand === "0" || Number(item.itemPrice) == 0 || item.availableItems === "0" ){
+      alert("Please fill all the fields")
+    }
+    else{
+    try {
+      const res = await axios.post("http://localhost:3001/api/updateSupplierItem", {
+        categoryId: selectedCategory.categoryId,
+        itemId: selectedItem.itemId,
+        brandName: selectedBrand,
+        userId: window.sessionStorage.getItem(sessionConst.userId),
+        pricePerItem: item.itemPrice,
+        availableItems: item.availableItems,
+      });
+      // navigate('/UserProfile')
+      alert(res.data.message);
+
+      if(res.data.message.includes("Successfully")){
+      setSelectedCategoryName('');
+      setSelectedItemName('');
+      setSelectedBrand('');
+      setItem({...item,itemPrice : '', availableItems:''});
+      }
+      // setUser({...user, bankname:'', ifsc:'',city:'',state:'', address:'',pinCode:'',branchcode:'',interest:''})
+    } catch (err) {
+      console.log(err);
+    }
+  }
   };
 
     return(
@@ -311,7 +377,7 @@ function Supplier({user}) {
                 <div className="col mt-1 form-floating d-flex align-items-center justify-content-between">
                   
                   <select id="itname iname" className="form-control item_input" value={selectedCategoryName} onChange={handleSelectedCategory} required>
-                    <option value='' selected>Select...</option>
+                    <option value='' selected>Select Category</option>
                     {categoryList[0] && categoryList[0].map((val) => (
                       <option key={val.categoryId} value={val.categoryName}>{val.categoryName}</option>
                     ))}
@@ -353,7 +419,7 @@ function Supplier({user}) {
                 <div className="col mt-1 form-floating d-flex align-items-center justify-content-between">
                   
                   <select id="itname iname" className="form-control item_input" value={selectedItemName} onChange={handleSelectedItem} required>
-                    <option value='' selected>Select...</option>
+                    <option value='' selected>Select Item Name</option>
                     {itemList && itemList.map((val) => (
                       <option key={val.itemId} value={val.itemName}>{val.itemName}</option>
                     ))}
@@ -407,7 +473,7 @@ function Supplier({user}) {
                 <div className="col mt-1 form-floating d-flex align-items-center justify-content-between">
                   
                   <select id="brand" className="form-control item_input" value={selectedBrand} onChange={handleSelectedBrand} required>
-                    <option value='' selected>Select...</option>
+                    <option value='' selected>Select Brand Name</option>
                     {brandList && brandList.map((val, index) => (
                       <option key={index} value={val.brandName}>{val.brandName}</option>
                     ))}
@@ -425,7 +491,20 @@ function Supplier({user}) {
                         </div>
                       <div className="modal-body">
                       <form className="row justify-content-center" method="post">
-                    
+                      <div className="row align-items-center inputBox">
+                          <div className="col mt-1 form-floating">
+                            
+                            <input type="text" className=" form-control" id="cname" name="categoryName" value={selectedCategoryName} required disabled/>
+                            <label className="mx-3" htmlFor="cname">Category Name</label>
+                          </div>
+                        </div>
+                        <div className="row align-items-center inputBox">
+                          <div className="col mt-1 form-floating">
+                            
+                            <input type="text" className=" form-control" id="itname" name="itemName" value={selectedItemName} required disabled/>
+                            <label className="mx-3" htmlFor="iname">Item Name</label>
+                          </div>
+                        </div>
                         <div className="row align-items-center inputBox">
                           <div className="col mt-1 form-floating">
                             
@@ -461,10 +540,18 @@ function Supplier({user}) {
                 </div>
               </div>
              
+             <div style={{display : "flex"}}>
               <div className="row justify-content-start my-3">
                 <div className="col d-flex justify-content-center">
                   <button className="btn btn-primary btn-lg mt-1" onClick={submitDetails}>Submit</button>
                 </div>
+              </div>
+
+              <div className="row justify-content-start my-3 ml-3">
+                <div className="col d-flex justify-content-center ml-3">
+                  <button className="btn btn-primary btn-lg mt-1" onClick={updateDetails}>Update</button>
+                </div>
+              </div>
               </div>
           </div>
         </form>

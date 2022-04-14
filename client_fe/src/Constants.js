@@ -11,10 +11,10 @@ export const options = [
         userType : "SUPPLIER",
         typeId : 3,
     },
-    {
-        userType : "BANK",
-        typeId : 4,
-    }
+    // {
+    //     userType : "BANK",
+    //     typeId : 4,
+    // }
 ];
 
 
@@ -50,5 +50,16 @@ export const sessionConst = {
     userId: "userId",
     
 };
+
+export const statusConst = [
+    {
+        status : "Approved",
+        statusId : 1,
+    },
+    {
+        status : "Pending",
+        statusId : 2,
+    }
+]
 
 export default options;

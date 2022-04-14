@@ -20,16 +20,23 @@ function RegisterBank() {
 
   let name, value;
   const handleInput = (e) => {
+
     console.log(e);
     name = e.target.name;
     value = e.target.value;
 
     setUser({...user, [name] : value});
+    if(e.target.value === ""){
+      alert("Enter all fields");
+    }
   }
  
 
 const  submitDetails = (e) => {
   e.preventDefault();
+  if(user.bankname === "" || user.ifsc === "" || user.city === "" || user.state === "" || user.address === "" || user.pinCode === "" || user.branchcode === "" || user.interest === ""){
+    alert("Please Fill all the fields");
+  }else{
   console.log(user.bankname,user.bankid,user.ifsc,user.address,user.branchcode,user.interest,user.password);
 axios.post("http://localhost:3001/api/registerbank", 
     {
@@ -55,7 +62,7 @@ axios.post("http://localhost:3001/api/registerbank",
     
     })
   console.log("yo");
-
+  }
   };
     return (
       <>

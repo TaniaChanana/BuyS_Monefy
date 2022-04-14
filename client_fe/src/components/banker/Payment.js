@@ -133,7 +133,9 @@ const Payment = () => {
       modeOfPayment: user.modeOfPayment,
       buyerItemPurchaseId: location.state.buyerItemPurchaseId
     })
-    console.log(response)
+    
+    alert(response.data.message)
+
     }catch(err){
       console.log(err);
     }

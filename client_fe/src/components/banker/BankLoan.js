@@ -208,6 +208,9 @@ const BankLoan = () => {
                 mediaIdCollateral : collateralPDFId,
                 mediaIdLoanPDF : bankLoanPDFId,
             })
+
+          alert(response.data.message);
+          
     console.log(response)
     }catch(err){
       console.log(err);
