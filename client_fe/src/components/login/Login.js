@@ -34,6 +34,12 @@ function Login() {
         
       })
       .then((res) => {
+
+        if(res.data.message.includes("signup")){
+          console.log("in if")
+          alert(res.data.message);
+        }else{
+          console.log("in else")
         window.sessionStorage.setItem(sessionConst.userName, login.userName);
         window.sessionStorage.setItem(sessionConst.userType, login.userType);
         console.log("LOGIN SUCCESSFUL-->>>>>");
@@ -52,10 +58,8 @@ function Login() {
             navigate('/UserProfile')
           }
 
-        }else{
-          console.log("login not successful");
         }
-        
+      }
       })
       
   };
@@ -63,32 +67,7 @@ function Login() {
   return (
     <>
       <Header />
-      {/* <div className="login">
-        <h1>Login</h1>
-        <form method="get">
-          <div className="txt_field">
-            <input type="text" name="userName" value={login.userName} required onChange={handleInput}></input>
-            <label>Username</label>
-          </div>
-
-          <div className="txt_field">
-            <input type="password" name="password" value={login.password} required onChange={handleInput}></input>
-            <label>Password</label>
-          </div>
-
-          <div className="pass">Forgot Password?</div>
-          <label>Select User Type :  </label>
-          <select className="txt_field" id="ddlUserType" value={login.userType} name="userType" onChange={handleInput}>
-
-            <option value="0">Please select</option>
-            {
-              options.map((option, index) => (<option key={index} value={option.typeId}>{option.userType}</option>))
-            }
-          </select>
-          <input type="submit" value="Login" onClick={(e) => { loginValidate(e) }}></input>
-          <div className="signup_link">Not a member? <a href="#">SignUp</a></div>
-        </form>
-      </div> */}
+      
        <div className="container">
           <form className="row justify-content-center" method="post">
             <div className="col-12 col-md-8 col-lg-6 col-xl-5">
