@@ -107,7 +107,7 @@ function Header() {
 
       <li class="nav-item">
        { usertype==='2'?<Link to="/ViewLoanDetails" class={`nav-link ${styles["nav-link"]} ${splitLocation[1] === "ViewLoanDetails" ? styles["active"] : ""}`} id="navbarDocumentation" >
-          View Loan Details
+          Loan Details
         </Link>:(usertype==='3'?(<Link to="/ViewItemList" class={`nav-link ${styles["nav-link"]} ${splitLocation[1] === "ViewItemList" ? styles["active"] : ""}`} id="navbarDocumentation" >
           Your Items
         </Link>):(<></>))}
@@ -116,9 +116,9 @@ function Header() {
 
       <li class="nav-item">
        { usertype==='2'?<Link to="/ViewBankDetailsBuyer" class={`nav-link ${styles["nav-link"]} ${splitLocation[1] === "ViewBankDetailsBuyer" ? styles["active"] : ""}`} id="navbarDocumentation" >
-          View Bank Details
+         Bank Details
         </Link>:(usertype==='3'?(<Link to="/ViewBankDetailsSupplier" class={`nav-link ${styles["nav-link"]} ${splitLocation[1] === "ViewBankDetailsSupplier" ? styles["active"] : ""}`} id="navbarDocumentation" >
-        View Bank Details
+         Bank Details
         </Link>):(<></>))}
         
       </li>
@@ -135,11 +135,26 @@ function Header() {
 
     </ul>
 
-   {(usertype==='2' || usertype === '3' || usertype === '4' || usertype === '1') ? (<div className={styles['header-butns']}>
+   {/* {(usertype==='2' || usertype === '3' || usertype === '4' || usertype === '1') ? (<div className={styles['header-butns']}>
     <button class="navbar-btn btn btn-sm btn-primary lift ms-auto mx-2" onClick={logoutHandle} >
       Logout
     </button>
     </div> ) : ( <div className={styles['header-butns']}>
+    <Link to="/Login" class="navbar-btn btn btn-sm btn-primary lift ms-auto mx-2"  >
+      Login
+    </Link>
+    <Link to="/signup" class="navbar-btn btn btn-sm btn-primary lift ms-auto mx-2" >
+      Sign Up
+    </Link>
+    </div>) 
+    } */}
+
+    {(usertype==='2' || usertype === '3' || usertype === '4' || usertype === '1') ? (<>
+   <h3 className='ms-auto text-black-50'>{window.sessionStorage.getItem(sessionConst.userName)}</h3><div className={styles['header-butns']}>
+    <button class="navbar-btn btn btn-sm btn-primary lift ms-auto mr-2" onClick={logoutHandle} >
+      Logout
+    </button>
+    </div></> ) : ( <div className={styles['header-butns']}>
     <Link to="/Login" class="navbar-btn btn btn-sm btn-primary lift ms-auto mx-2"  >
       Login
     </Link>

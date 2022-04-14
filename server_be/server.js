@@ -484,7 +484,11 @@ class BUYSMONEFY {
 
                             this.db.query(signSql, [fname, lname, phoneNumber, emailAddress, userName, userType, addressId], (err, result) => {
 
-                                if (err) throw err;
+                                if (err) {
+                                    if (err.code === "ER_DUP_ENTRY") {
+                                        res.status(200).send({ success: true, message: 'Duplicate Entry for this User Name, please enter different User Name' });
+                                    }
+                                }
                                 else {
 
                                     console.log('User Details record inserted');
@@ -505,7 +509,8 @@ class BUYSMONEFY {
                                                 if (err) throw err;
 
                                                 console.log('record inserted in login');
-                                                res.sendStatus(200);
+                                                res.status(200).send({ success: true, message: 'User Account created successfully, Now you can login with you credentials' });
+
 
                                             });
                                         }
@@ -540,11 +545,11 @@ class BUYSMONEFY {
                             console.log(err);
                             res.sendStatus(500);
                         } else if (result.length == 0) {
-                            res.status(404).send({ success: false, message: 'this username is not registered with us, please signup first' });
+                            res.status(200).send({ success: false, message: 'You are not registered with us, please signup first' });
                         }
                         else {
                             console.log(result);
-                            res.sendStatus(200);
+                            res.sendStatus(200)
                         }
                     })
 
@@ -558,10 +563,12 @@ class BUYSMONEFY {
             this.db.query(categorySql, [categoryName], (err, result) => {
                 if (err) {
                     console.log(err);
-                    res.sendStatus(500);
+                    if (err.code === "ER_DUP_ENTRY") {
+                        res.status(200).send({ success: true, message: 'Duplicate Entry for this category, Please select from category list' });
+                    }
                 }
                 else {
-                    res.sendStatus(200)
+                    res.status(200).send({ success: true, message: "Category Added Successfully" })
                 }
             })
         });
@@ -573,14 +580,16 @@ class BUYSMONEFY {
             this.db.query(categorySql, [itemName, categoryId], (err, result) => {
                 if (err) {
                     console.log(err);
-                    res.sendStatus(500);
+                    if (err.code === "ER_DUP_ENTRY") {
+                        res.status(200).send({ success: true, message: 'Duplicate Entry for this item, Please select from item list' });
+                    }
                 }
                 else {
-                    res.sendStatus(200)
+                    res.status(200).send({ success: true, message: "Item Added Successfully" })
                 }
             })
         });
-        88
+
         this.app.post('/api/addPaymentTransaction', (req, res) => {
             const fromBankName = req.body.fromBankName;
             const fromBranchCode = req.body.fromBranchCode;
@@ -597,17 +606,25 @@ class BUYSMONEFY {
             console.log(accountNumberList);
             let fromUserAccountDetailsId;
             let toUserAccountDetailsId;
-            const paymentTransactionSql = `select userAccountDetailsId, accountNumber from user_account_details where accountNumber in (?)`;
+            const paymentTransactionSql = `select userAccountDetailsId, accountNumber, amount from user_account_details where accountNumber in (?)`;
             this.db.query(paymentTransactionSql, [accountNumberList], (err, result) => {
                 console.log(result);
+                let doPayment = true;
                 if (result[0].accountNumber === fromAccountNumber) {
                     fromUserAccountDetailsId = result[0].userAccountDetailsId;
+                    if(result[0].amount < amountToBePaid){
+                        doPayment = false;
+                    }
                     toUserAccountDetailsId = result[1].userAccountDetailsId;
                 } else {
                     fromUserAccountDetailsId = result[1].userAccountDetailsId;
+                    if(result[1].amount < amountToBePaid){
+                        doPayment = false;
+                    }
                     toUserAccountDetailsId = result[0].userAccountDetailsId;
                 }
 
+                if(doPayment){
                 const paymentRecordSql = `insert into payment_details(paidAmount, modeOfPayment, timeOfPayment, 
                                                 fromUserAccountDetailsId, toUserAccountDetailsId) values(?,?,?,?,?)`;
                 this.db.query(paymentRecordSql, [amountToBePaid, modeOfPayment, timeOfPayment,
@@ -633,10 +650,10 @@ class BUYSMONEFY {
                                             this.db.query(updateBuyerPaymentStatus, [buyerItemPurchaseId], (err, result) => {
                                                 if (err) {
                                                     console.log(err);
-                                                    res.sendStatus(500);
+                                                    res.status(200).send({ success: true, message: 'There is some issue with network, Payment is not successful' });
                                                 } else {
                                                     // res.send({message: 'transaction successful from your side , amount added to the supplier account and deducted from your account'});
-                                                    res.status(200).send({ success: true, message: 'transaction successful from your side , amount added to the supplier account and deducted from your account' });
+                                                    res.status(200).send({ success: true, message: 'Transaction successfully Done , amount added to the supplier account and deducted from your account' });
                                                 }
                                             })
                                         }
@@ -645,6 +662,11 @@ class BUYSMONEFY {
                             })
                         }
                     })
+                }else{
+                    // res.send({message: 'transaction successful from your side , amount added to the supplier account and deducted from your account'});
+                    res.status(200).send({ success: true, message: "Your account doesn't have sufficient balance, Payment failed..." });
+                                                
+                }
             })
         });
 
@@ -656,10 +678,12 @@ class BUYSMONEFY {
             this.db.query(categorySql, [categoryId, itemId, brandName], (err, result) => {
                 if (err) {
                     console.log(err);
-                    res.sendStatus(500);
+                    if (err.code === "ER_DUP_ENTRY") {
+                        res.status(200).send({ success: true, message: 'Duplicate Entry for this Brand, Please select from Brand list' });
+                    }
                 }
                 else {
-                    res.sendStatus(200)
+                    res.status(200).send({ success: true, message: "Brand Added Successfully" })
                 }
             })
         });
@@ -686,12 +710,12 @@ class BUYSMONEFY {
                     this.db.query(userAccountSql, [userId, fetchBankId, amount, accountNumber], (err, result) => {
                         if (err) {
                             console.log(err);
-                            if(err.code === "ER_DUP_ENTRY"){
+                            if (err.code === "ER_DUP_ENTRY") {
                                 res.status(200).send({ success: true, message: 'Duplicate Entry for this account, please enter correct account number' });
                             }
                         }
                         else {
-                            res.status(200).send({success : true , message : "Account Added Successfully"})
+                            res.status(200).send({ success: true, message: "Account Added Successfully" })
                         }
                     })
                 }
@@ -728,11 +752,12 @@ class BUYSMONEFY {
                             this.db.query(bankSql, [bankName, ifscCode, fetchedAddressId, branchCode, rateOfInterest], (err, result) => {
                                 if (err) {
                                     console.log(err);
-                                    res.sendStatus(500);
+                                    if (err.code === "ER_DUP_ENTRY") {
+                                        res.status(200).send({ success: true, message: 'Duplicate Entry for this Bank' });
+                                    }
                                 }
                                 else {
-                                    console.log("bank details inserted");
-                                    res.sendStatus(200);
+                                    res.status(200).send({ success: true, message: "Bank Added Successfully" })
                                 }
                             })
                         }
@@ -760,16 +785,62 @@ class BUYSMONEFY {
                     this.db.query(supplierSql, [itemDetailsId, userId, pricePerItem, availableItems], (err, result) => {
                         if (err) {
                             console.log(err);
-                            res.sendStatus(500);
+                            if (err.code === "ER_DUP_ENTRY") {
+                                res.status(200).send({ success: true, message: 'Duplicate Entry for this item Details' });
+                            }
                         }
                         else {
-                            console.log("Supplier item details inserted");
-                            res.sendStatus(200);
+                            res.status(200).send({ success: true, message: "Item Details Added Successfully" })
                         }
                     })
                 }
             })
         });
+
+
+        this.app.post('/api/updateSupplierItem', (req, res) => {
+            const categoryId = req.body.categoryId;
+            const itemId = req.body.itemId;
+            const brandName = req.body.brandName;
+            const userId = req.body.userId;
+            const pricePerItem = req.body.pricePerItem;
+            const availableItems = req.body.availableItems;
+            let categorySql = `select itemDetailsId from item_details where categoryId = ? and itemId = ? and brandName = ?`;
+            this.db.query(categorySql, [categoryId, itemId, brandName], (err, result) => {
+                if (err) {
+                    console.log(err);
+                    res.sendStatus(500);
+                }
+                else {
+                    const itemDetailsId = result[0].itemDetailsId;
+                    let supplierIdSql = `select supplierItemDetailsId from supplier_item_details where userId = ? and itemDetailsId = ?`;
+                    this.db.query(supplierIdSql, [userId, itemDetailsId], (err, result) => {
+                        if (err) {
+                            console.log(err);
+                            res.sendStatus(500);
+                        }
+                        else {
+                            const supplierItemDetailsId = result[0].supplierItemDetailsId;
+
+                            console.log("supplierItemDetailsId : ", supplierItemDetailsId , " itemDetailsId", itemDetailsId , " price per item", pricePerItem," availableItems" , availableItems)
+                            let supplierSql = "update supplier_item_details set availableItems = ? , pricePerItem = ? where supplierItemDetailsId = ? ";
+                            this.db.query(supplierSql, [availableItems, pricePerItem, supplierItemDetailsId], (err, result) => {
+                                if (err) {
+                                    console.log(err);
+                                    if (err.code === "ER_DUP_ENTRY") {
+                                        res.status(200).send({ success: true, message: 'Duplicate Entry for this item Details' });
+                                    }
+                                }
+                                else {
+                                    res.status(200).send({ success: true, message: "Item Details Updated Successfully" })
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+        });
+
 
         this.app.post('/api/addLoanDetails', (req, res) => {
             const userId = req.body.userId;
@@ -801,9 +872,12 @@ class BUYSMONEFY {
                             this.db.query(loanDetailsSql, [userAccountDetailsId, loanAmount, mediaIdCollateral, mediaIdLoanPDF, loanDateTime, status, emiMonths, interestAmount, totalAmountToBePaid], (err, result) => {
                                 if (err) {
                                     console.log(err);
-                                    res.sendStatus(500);
-                                } else {
-                                    res.sendStatus(200);
+                                    if (err.code === "ER_DUP_ENTRY") {
+                                        res.status(200).send({ success: true, message: 'There is some error while taking loan, We will update you soon' });
+                                    }
+                                }
+                                else {
+                                    res.status(200).send({ success: true, message: "Loan amount is Added Successfully to your bank account" })
                                 }
                             })
                         }
@@ -822,7 +896,6 @@ class BUYSMONEFY {
             const noOfItems = req.body.noOfItems;
             const totalPrice = req.body.totalPrice;
             const modeOfPayment = req.body.modeOfPayment;
-            console.log("supplie id : ", supplierId);
             let categorySql = `select itemDetailsId from item_details where categoryId = ? and itemId = ? and brandName = ?`;
             this.db.query(categorySql, [categoryId, itemId, brandName], (err, result) => {
                 if (err) {

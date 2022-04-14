@@ -58,14 +58,11 @@ function SignUp() {
       address:user.address,
       pinCode:user.pincode
     },).then((res) => {
-        console.log(res.data[0]);
-        var loguser = res.data[0].userName;
-        var logpass = res.data[0].password;
-        console.log(res);
-        if(res.status === 200){
+       alert(res.data.message);
+        console.log("checking" , res.data.message);
+        if(res.status === 200 && res.data.message.includes("successfully")){
           console.log("signup");
           navigate('/login');
-
         }
      
     }).catch((err) => { 

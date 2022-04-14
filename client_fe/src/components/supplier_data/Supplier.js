@@ -157,10 +157,14 @@ function Supplier({user}) {
     e.preventDefault();
     let list = async () => {
       try{
-        await axios.post("http://localhost:3001/api/addItem", {
+        const res = await axios.post("http://localhost:3001/api/addItem", {
           categoryId: selectedCategory?.categoryId,
-          itemName: itemName
+          itemName: itemName.toUpperCase()
         })
+
+        alert(res.data.message)
+        
+        if(!res.data.message.includes("Duplicate"))
         setSelectedItemName(itemName);
       }catch(err){
         console.log(err);
@@ -176,10 +180,14 @@ function Supplier({user}) {
       console.log('category');
       console.log(categoryName);
       try{
-        await axios.post('http://localhost:3001/api/addCategory', {
-          categoryName: categoryName
+        const res = await axios.post('http://localhost:3001/api/addCategory', {
+          categoryName: categoryName.toUpperCase()
         })
+        alert(res.data.message)
+        
+        if(!res.data.message.includes("Duplicate"))
         setSelectedCategoryName(categoryName);
+
       }catch(err){
         console.log(err)
       }
@@ -192,11 +200,15 @@ function Supplier({user}) {
     e.preventDefault();
     let list = async () => {
       try{
-        await axios.post('http://localhost:3001/api/addBrand', {
+       const res =  await axios.post('http://localhost:3001/api/addBrand', {
           categoryId: selectedCategory?.categoryId,
           itemId: selectedItem.itemId,
-          brandName: brandName
+          brandName: brandName.toUpperCase()
         })
+
+        alert(res.data.message)
+        
+        if(!res.data.message.includes("Duplicate"))
         setSelectedBrand(brandName);
       }catch(err){
         console.log(err)
@@ -293,7 +305,7 @@ function Supplier({user}) {
     }
     else{
     try {
-      await axios.post("http://localhost:3001/api/addSupplierItem", {
+      const res = await axios.post("http://localhost:3001/api/addSupplierItem", {
         categoryId: selectedCategory.categoryId,
         itemId: selectedItem.itemId,
         brandName: selectedBrand,
@@ -302,11 +314,45 @@ function Supplier({user}) {
         availableItems: item.availableItems,
       });
       // navigate('/UserProfile')
-      alert("Item Added Successfully");
+      alert(res.data.message);
+
+      if(res.data.message.includes("Successfully")){
       setSelectedCategoryName('');
       setSelectedItemName('');
       setSelectedBrand('');
       setItem({...item,itemPrice : '', availableItems:''});
+      }
+      // setUser({...user, bankname:'', ifsc:'',city:'',state:'', address:'',pinCode:'',branchcode:'',interest:''})
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  };
+
+  const updateDetails = async(e) => {
+    e.preventDefault();
+    if(selectedCategoryName === "0" || selectedItemName === "0" || selectedBrand === "0" || Number(item.itemPrice) == 0 || item.availableItems === "0" ){
+      alert("Please fill all the fields")
+    }
+    else{
+    try {
+      const res = await axios.post("http://localhost:3001/api/updateSupplierItem", {
+        categoryId: selectedCategory.categoryId,
+        itemId: selectedItem.itemId,
+        brandName: selectedBrand,
+        userId: window.sessionStorage.getItem(sessionConst.userId),
+        pricePerItem: item.itemPrice,
+        availableItems: item.availableItems,
+      });
+      // navigate('/UserProfile')
+      alert(res.data.message);
+
+      if(res.data.message.includes("Successfully")){
+      setSelectedCategoryName('');
+      setSelectedItemName('');
+      setSelectedBrand('');
+      setItem({...item,itemPrice : '', availableItems:''});
+      }
       // setUser({...user, bankname:'', ifsc:'',city:'',state:'', address:'',pinCode:'',branchcode:'',interest:''})
     } catch (err) {
       console.log(err);
@@ -494,10 +540,18 @@ function Supplier({user}) {
                 </div>
               </div>
              
+             <div style={{display : "flex"}}>
               <div className="row justify-content-start my-3">
                 <div className="col d-flex justify-content-center">
                   <button className="btn btn-primary btn-lg mt-1" onClick={submitDetails}>Submit</button>
                 </div>
+              </div>
+
+              <div className="row justify-content-start my-3 ml-3">
+                <div className="col d-flex justify-content-center ml-3">
+                  <button className="btn btn-primary btn-lg mt-1" onClick={updateDetails}>Update</button>
+                </div>
+              </div>
               </div>
           </div>
         </form>

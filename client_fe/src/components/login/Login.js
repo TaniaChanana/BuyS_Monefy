@@ -24,12 +24,7 @@ function Login() {
   }
 
   const loginValidate = async (e) => {
-    // console.log(login.userName);
     e.preventDefault();
-    // const res = await axios.get("http://localhost:3001/api/createAccount")   
-    // console.log(res);   
-    // window.sessionStorage.setItem(sessionConst.bankAccounts, JSON.stringify(res.data));
-    // let response = await axios.get("http://localhost:3001/api/loginValidate", )
     const response = await axios.post("http://localhost:3001/api/loginValidate",
       {
         
