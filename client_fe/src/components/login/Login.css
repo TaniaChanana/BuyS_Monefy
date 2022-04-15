@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Poppins:wght@400;500;600&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Poppins:wght@400;500;600&display=swap');
 *{
   margin: 0;
   padding: 0;
@@ -14,7 +14,7 @@
   background: white;
   border-radius: 10px;
   /* box-shadow: 15px 15px 15px rgba(0.5,0.5,0.5,0.5); */
-  box-shadow: -1px 1px 5px 9px rgba(0,0,0,0.3);
+  /* box-shadow: -1px 1px 5px 9px rgba(0,0,0,0.3);
 }
 .login h1{
   position: relative;
@@ -67,12 +67,12 @@ form .txt_field{
 .txt_field input:valid ~ label{
   top: -5px;
   color: #2691d9;
-}
+} */
 /* .txt_field input:focus ~ span::before,
 .txt_field input:valid ~ span::before{
   width: 100%;
-} */
-.pass{
+/* } */
+/* .pass{
   margin: -5px 0 20px 5px;
   color: #a6a6a6;
   cursor: pointer;
@@ -108,8 +108,20 @@ input[type="submit"]:hover{
 }
 .signup_link a:hover{
   text-decoration: underline;
-}
+}  */
 /* .selectTag{
   width: 460px !important;
   height: 60px !important;
+} */
+/* .main-setting{
+  width: 100vw;
+  height: 100vh;
+
+}
+.main-setting::before{
+  content:'';
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background: url("../../assets/back.jpeg") ;
 } */
