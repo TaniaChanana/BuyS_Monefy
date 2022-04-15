@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Header from '../header/Header'
 import video from '../../assets/admin.mp4'
 import { sessionConst } from '../../Constants';
+import './Admin.css';
 function Admin() {
 
   const [name, setName] = useState("");
