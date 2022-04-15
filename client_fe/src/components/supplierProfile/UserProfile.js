@@ -43,7 +43,7 @@ const UserProfile = () => {
           <h3 className='second-heading'> {name} </h3>
         </div>
         <div>
-          <video src={video} loop muted autoPlay controls = '' className='video-setting'></video>
+          <video src={video} loop muted autoPlay controls = '' className='video-setting-c'></video>
         </div>
        </div>
     </div> 

@@ -153,7 +153,7 @@ function SignUp() {
               </div>
               <div className="row justify-content-center mt-1 inputBox">
                 <select className="mt-1 form-select" id="ddlUserType" name="userType" value={user.userType} onChange={handleInput} required >
-                  <option value="0">select...</option>
+                  <option value="0">Select User Type</option>
                     {options.map((option, index) => (
                     <option key={index} value={option.typeId}>{option.userType}</option>
                   ))}

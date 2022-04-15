@@ -4,6 +4,7 @@ import axios, { Axios } from "axios";
 import Header from "../header/Header";
 import video from '../../assets/buyer.mp4'
 import { sessionConst } from '../../Constants';
+import './Buyer.css';
 function Buyer() {
 
   const [name, setName] = useState("");
@@ -23,7 +24,7 @@ function Buyer() {
           <h3 className='second-heading'> {name} </h3>
         </div>
         <div>
-          <video src={video} loop muted autoPlay controls = '' className='video-setting'></video>
+          <video src={video} loop muted autoPlay controls = '' className='video-setting-b'></video>
         </div>
        </div>
     </div>
