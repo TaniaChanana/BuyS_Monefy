@@ -284,16 +284,12 @@ class BUYSMONEFY {
         this.app.get('/api/getInterestForBank', (req, res) => {
             const bankName = req.query.bankName;
             const branchCode = req.query.branchCode;
-            // const amount = req.query.amount;
-            // const timePeriod = req.query.timePeriod;
             const rateOfInterestSql = "select rateOfInterest from bank_details where bankName = ? and branchCode = ?";
             this.db.query(rateOfInterestSql, [bankName, branchCode], (err, result) => {
                 if (err) {
                     console.log(err);
                     res.sendStatus(500);
                 } else {
-                    // let rateOfInterest = result[0].rateOfInterest;
-                    // let interest = (amount * rateOfInterest * (timePeriod / 12)) / 100;
                     console.log(result);
                     res.send(result);
                 }
@@ -612,6 +608,9 @@ class BUYSMONEFY {
             let toUserAccountDetailsId;
             const paymentTransactionSql = `select userAccountDetailsId, accountNumber, amount from user_account_details where accountNumber in (?)`;
             this.db.query(paymentTransactionSql, [accountNumberList], (err, result) => {
+                if(result.length < 2){
+                   res.status(200).send({ success: true, message: 'Please Enter a valid account Number' });                               
+                }else{
                 console.log(result);
                 let doPayment = true;
                 if (result[0].accountNumber === fromAccountNumber) {
@@ -671,6 +670,7 @@ class BUYSMONEFY {
                     res.status(200).send({ success: true, message: "Your account doesn't have sufficient balance, Payment failed..." });
                                                 
                 }
+            }
             })
         });
 
@@ -863,7 +863,7 @@ class BUYSMONEFY {
             this.db.query(fetchUserAccountDetailsIdSql, [accountNumber], (err, result) => {
                 if (err) {
                     console.log(err);
-                    res.status(404).send({ success: false, message: 'account number not found, please enter correct account number' });
+                    res.status(200).send({ success: false, message: 'Account number not found, please enter correct account number' });
                 } else {
                     let userAccountDetailsId = result[0].userAccountDetailsId;
                     const updateBankDetailsSql = "update user_account_details set amount = amount+? where accountNumber = ?";

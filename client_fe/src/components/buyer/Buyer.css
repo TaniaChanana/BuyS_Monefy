@@ -62,9 +62,14 @@
 .banner .info a:hover{
 	background: #e91e63;
 } */
-.video-setting{
+/* .video-setting{
     width: 1000px !important;
     height: 700px !important;
+} */
+
+.video-setting{
+    width: 100% !important;
+    height: 100% !important;
 }
 .headings{
     margin-left: 100px;
