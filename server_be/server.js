@@ -602,6 +602,7 @@ class BUYSMONEFY {
             const modeOfPayment = req.body.modeOfPayment;
             const timeOfPayment = new Date();
             const buyerItemPurchaseId = req.body.buyerItemPurchaseId;
+            const purchaseItem = req.body.purchaseItem;
             let accountNumberList = [fromAccountNumber, toAccountNumber]
             console.log(accountNumberList);
             let fromUserAccountDetailsId;
@@ -666,9 +667,17 @@ class BUYSMONEFY {
                         }
                     })
                 }else{
-                    // res.send({message: 'transaction successful from your side , amount added to the supplier account and deducted from your account'});
-                    res.status(200).send({ success: true, message: "Your account doesn't have sufficient balance, Payment failed..." });
-                                                
+                    const updateNoOfItemsSql = "update supplier_item_details s inner join buyer_item_purchase b on s.supplierItemDetailsId = b.supplierItemDetailsId and b.buyerItemPurchaseId = ? set s.availableItems = s.availableItems+?";
+                    console.log("buyerItemPurchaseId ", buyerItemPurchaseId, " purchaseItem", purchaseItem);
+                    this.db.query(updateNoOfItemsSql, [buyerItemPurchaseId, purchaseItem] , (err,result) => {
+                        if (err) {
+                            console.log(err);
+                            res.status(200).send({ success: true, message: "Your account doesn't have sufficient balance, Payment failed..." });
+                        } else {
+                            // res.send({message: 'transaction successful from your side , amount added to the supplier account and deducted from your account'});
+                            res.status(200).send({ success: true, message: "Your account doesn't have sufficient balance, Payment failed..." });
+                        }
+                    })                        
                 }
             }
             })

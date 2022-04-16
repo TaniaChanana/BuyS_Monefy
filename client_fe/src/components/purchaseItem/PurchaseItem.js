@@ -300,7 +300,7 @@ console.log(mode);
     console.log(supplierId);
     axios.post("http://localhost:3001/api/addBuyerItemPurchase", 
     {
-      categoryId: selectedCategory?.categoryId,
+          categoryId: selectedCategory?.categoryId,
           itemId:selectedItem?.itemId,
           brandName:selectedBrandName,
           supplierId : supplierId,
@@ -310,11 +310,12 @@ console.log(mode);
           modeOfPayment : mode
     },).then((response) => {
       const buyerItemPurchaseId =  response.data[0].buyerItemPurchaseId;
+      
       console.log("response checking" ,  response.data[0].buyerItemPurchaseId);
       if(mode === '1'){
-        navigate('/payment',{state:{amount:amount, sname:supplierName, modeOfPayment : 1 , buyerItemPurchaseId : buyerItemPurchaseId}});
+        navigate('/payment',{state:{amount:amount, sname:supplierName, modeOfPayment : 1 , buyerItemPurchaseId : buyerItemPurchaseId, purchaseItem : purchaseItem}});
       }else if(mode === '2'){
-        navigate('/bankLoan',{state: {amount : amount, modeOfPayment : 2, sname : supplierName , buyerItemPurchaseId : buyerItemPurchaseId}})
+        navigate('/bankLoan',{state: {amount : amount, modeOfPayment : 2, sname : supplierName , buyerItemPurchaseId : buyerItemPurchaseId, purchaseItem : purchaseItem}});
       }
     }).catch((err) => { console.log('Axios Error:', err); })
   };
