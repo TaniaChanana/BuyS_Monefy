@@ -250,34 +250,7 @@ let target_category=JSON.parse(e.target.value);
     setSelectedItemName(e.target.value);
 
 
-      // item name : item id  => supplier details
-      // itemmap : key : item id value map : (<supplier : available item>)
-
-    //   supplierItemTransactionDetails.map((val) => { 
-      
-    //   let snameMap = new Map(); // key - supplierName , value - item price
-    //   if(!itemMap.has(val.itemId)){
-    //     itemMap.set(val.itemId , snameMap);
-    //   }
-
-    //   snameMap = itemMap.get(val.itemId);
-    //   snameMap.set(val.sname , val.availableItems);
-    //   itemMap.set(val.itemId,snameMap);
-
-
-    //   var str = val.itemId+":"+val.sname;
-      
-    //   itemPriceMap.set(str,val.itemPrice);
-      
-    //   availableItemsMap.set(str,val.availableItems);
-
-    // })
-
-    // supplierMap = itemMap.get(parseInt(selectedItemId));
-
-    // arr = Array.from(supplierMap, ([name, value]) => ({ name, value }));
-    // setArray(arr);
-    // console.log("arrays is : ",arr);
+  
     }
     console.log(selectedItemId);
   const handlePurchaseItem = (e) => {
@@ -309,9 +282,9 @@ console.log(mode);
           totalPrice:amount,
           modeOfPayment : mode
     },).then((response) => {
-      const buyerItemPurchaseId =  response.data[0].buyerItemPurchaseId;
+      const buyerItemPurchaseId =  response.data.buyerItemId;
       
-      console.log("response checking" ,  response.data[0].buyerItemPurchaseId);
+      console.log("response checking" ,  response);
       if(mode === '1'){
         navigate('/payment',{state:{amount:amount, sname:supplierName, modeOfPayment : 1 , buyerItemPurchaseId : buyerItemPurchaseId, purchaseItem : purchaseItem}});
       }else if(mode === '2'){

@@ -309,6 +309,7 @@ function Supplier({user}) {
         categoryId: selectedCategory.categoryId,
         itemId: selectedItem.itemId,
         brandName: selectedBrand,
+        itemName : selectedItem.itemName,
         userId: window.sessionStorage.getItem(sessionConst.userId),
         pricePerItem: item.itemPrice,
         availableItems: item.availableItems,
@@ -343,6 +344,7 @@ function Supplier({user}) {
         userId: window.sessionStorage.getItem(sessionConst.userId),
         pricePerItem: item.itemPrice,
         availableItems: item.availableItems,
+        itemName : selectedItem.itemName
       });
       // navigate('/UserProfile')
       alert(res.data.message);
