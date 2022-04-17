@@ -204,7 +204,7 @@ const BankLoan = () => {
                 loanAmount : user.famount,
                 accountNumber : user.fbaccountNumber,
                 emiMonths : user.timeperiod,
-                interestAmount: user.emiAmount,
+                interestAmount: user.interest,
                 mediaIdCollateral : collateralPDFId,
                 mediaIdLoanPDF : bankLoanPDFId,
             })

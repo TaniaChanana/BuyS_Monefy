@@ -133,6 +133,8 @@ const Payment = () => {
       modeOfPayment: user.modeOfPayment,
       buyerItemPurchaseId: location.state.buyerItemPurchaseId,
       purchaseItem : location.state.purchaseItem,
+      buyerName : window.sessionStorage.getItem(sessionConst.userName),
+      buyerType : window.sessionStorage.getItem(sessionConst.userType),
     })
     
     alert(response.data.message)
